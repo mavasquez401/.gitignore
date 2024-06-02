@@ -18,6 +18,7 @@ const connection = mysql.createConnection({
   database: process.env.DB_NAME
 });
 
+// Checks to connect to server
 connection.connect(err => {
   if (err) {
     console.error('Error connecting to the database:', err.stack);
@@ -31,6 +32,7 @@ connection.query('DESCRIBE ' + process.env.DB_TABLE_NAME, (err, results) => {
   console.log(results);
 });
 
+// New user information
 const newUser = {
   FirstName: 'John',
   LastName: 'Doe',
@@ -41,8 +43,17 @@ const newUser = {
   JobTitle: 'Software Engineer'
 };
 
+// Insert new user
+// ? is a place holder
 const query = `INSERT INTO ${process.env.DB_TABLE_NAME} (FirstName, LastName, Department, StartDate, EndDate, Salary, JobTitle) VALUES (?, ?, ?, ?, ?, ?, ?)`;
-connection.query(query, [newUser.FirstName, newUser.LastName, newUser.Department, newUser.StartDate, newUser.EndDate, newUser.Salary, newUser.JobTitle], (err, results) => {
+connection.query(query, [
+  newUser.FirstName, 
+  newUser.LastName, 
+  newUser.Department, 
+  newUser.StartDate, 
+  newUser.EndDate, 
+  newUser.Salary, 
+  newUser.JobTitle], (err, results) => {
   if (err) throw err;
   console.log('New user added:', results.insertId);
 });
